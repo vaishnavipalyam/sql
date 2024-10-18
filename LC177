@@ -1,0 +1,33 @@
+-- Leet code problem 177
+-- Find Nth highest salary
+-- If there is no nth highest salary return null
+
+USE RDBMS;
+
+-- solution 1
+-- query to find 3rd highest salary
+SELECT DISTINCT salary
+FROM `sal`
+ORDER BY salary DESC
+LIMIT 1 OFFSET 2;
+
+-- solution 2
+DELIMITER $$
+CREATE FUNCTION GetNthHighestSalary(N INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+    DECLARE result INT;
+    
+    SELECT DISTINCT salary
+    INTO result
+    FROM employee
+    ORDER BY salary DESC
+    LIMIT 1 OFFSET N-1;
+    
+    RETURN result;
+END $$
+
+DELIMITER ;
+
+SELECT GetNthHighestSalary(2) AS '2nd Highest Salary';
