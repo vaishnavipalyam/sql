@@ -1,0 +1,45 @@
+-- Leetcode question 175
+-- Join two tables
+
+use rdbms;
+
+CREATE TABLE
+  `person` (
+    `PersonId` INT,
+    `FirstName` VARCHAR(255),
+    `LastName` VARCHAR(255)
+  );
+
+CREATE TABLE
+  `address` (
+    `AddressId` INT,
+    `PersonId` INT,
+    `City` VARCHAR(255),
+    `State` VARCHAR(255)
+  );
+
+Insert into person 
+values
+  (1,'Sam','Harish'),
+  (2, 'Vrushaha','Rao'),
+(3, 'Carolina','Alex');
+
+select * from person;
+
+drop table address;
+
+Insert into
+  address (AddressId, PersonId, City, State)
+VALUES(1, 1,'NY', 'USA'),
+(2, 1, 'Bangalore', 'Karnataka'),
+(3, 2, 'Mysore', 'kanrnataka'),
+(4, 3, 'London', 'UK');
+
+select * from address;
+
+select p.FirstName, p.Lastname, a.City, a.State 
+from person p
+left join 
+address a
+on p.PersonId = a.PersonId;
+
