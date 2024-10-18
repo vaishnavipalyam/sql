@@ -1,0 +1,48 @@
+-- Leetcode problem 176
+-- second highest salary
+
+use RDBMS;
+
+create table sal
+(
+  id int,
+  salary int
+);
+
+insert into sal
+values (1, 1000), (2, 2000), (3, 3000);
+
+select * from sal;
+
+-- solution 1
+select ifnull((
+select distinct salary
+from sal
+order by salary desc
+limit 1 offset 1),
+null)
+as SecondHighestSalary;
+
+-- solution 2
+select max(salary) as SecondHighestSalary
+  from sal
+  where salary < (select max(salary) from sal);
+
+-- solution 3
+SELECT
+  `salary`
+FROM
+  (
+    SELECT
+      `salary`,
+      RANK() OVER (
+        ORDER BY
+          `salary` DESC
+      ) AS `rank_value`
+    FROM
+      `sal`
+  ) AS `ranked`
+WHERE
+  `rank_value` = 2;
+
+
