@@ -1,0 +1,25 @@
+use rdbms;
+
+-- Leet code problem 180
+-- Write a SQL query to find all numbers that appear at least three times consecutively.
+
+-- create the number table
+CREATE TABLE number (
+    ID INT PRIMARY KEY,
+    NumberColumn INT
+);
+
+-- insert values into the table
+INSERT INTO number
+values (1,1),(2,1),(3,1),(4,2),(5,1),(6,2),(7,2);
+
+-- Query the table
+select * from number;
+
+-- Solution using lead and log functions
+select NumberColumn FROM
+(Select NumberColumn,
+        lag(NumberColumn,1) over(order by ID) as PrevNum,
+        lead(NumberColumn,1) over(order by ID) as NextNum
+  From number) as conditioned
+where NumberColumn = PrevNum and NumberColumn=NextNum;
