@@ -1,0 +1,28 @@
+-- Leetcode problem 181
+-- Employees Earning More Than Their Managers
+
+use rdbms;
+
+-- create employee table
+create table employee(
+  ID int PRIMARY key,
+  Name varchar(250),
+  Salary int,
+  ManagerID int
+);
+
+Insert into employee VALUES
+(1, "Joe",70000, 3),
+(2, 'Henry', 80000, 4),
+(3, 'Sam', 60000, NULL),
+(4, 'Max', 90000, NULL);
+
+Select * from employee;
+
+-- Solution using self join
+
+select e.Name 
+  from employee e
+  inner join employee m
+  on e.ManagerID = m.ID
+  where e.Salary > m.Salary; 
