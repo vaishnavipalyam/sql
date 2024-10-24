@@ -1,0 +1,30 @@
+-- leet code problem 182
+-- Write a SQL query to find all duplicate emails in a table named Person.
+
+use rdbms;
+
+-- create person table 
+
+create table per(
+  ID int,
+  email varchar(250)
+);
+
+insert into per values(1, 'a@b.com'),(2,'b@c.com'),(3, 'a@b.com');
+
+select * from per;
+
+-- solution using count
+
+select `email`
+  from per
+  group by `email`
+  having count(`email`)>1;
+
+-- solution using row number
+
+select `email` from
+(SELECT `email`,
+         ROW_NUMBER() OVER (PARTITION BY `email` ORDER BY `email`) AS `RowNum`
+FROM `per`) as `numbered`
+where `RowNum`>1;
