@@ -1,0 +1,36 @@
+-- Leetcode problem 183
+-- Customer who never orders
+
+use RDBMS;
+
+-- Creating customer table
+create table customer(
+  ID int,
+  Name Varchar(250)
+);
+
+-- Insert values into customer table
+insert into customer VALUES
+(1, 'Joe'), (2, 'Henry'),(3,'Sam'),(4,'Max');
+
+-- Query the customer table
+select * from customer;
+
+-- Create orders table
+create table `order`(
+  ID int,
+  CustomerID int
+);
+
+-- Insert values into order
+insert into `order` VALUES
+(1, 3),(2,1);
+
+-- Query the order table
+select * from `order`;
+
+-- Solution
+
+Select Name from customer
+  where ID not in 
+(select CustomerID from `order`);
