@@ -1,0 +1,35 @@
+-- LEETCODE PROBLEM 196;
+-- DELETING 
+USE RDBMS;
+
+-- CREATE PERSON TABLE WITH EMAIL COLUMN
+CREATE TABLE PSN(
+  ID int,
+  Email varchar(250)
+);
+
+insert into PSN VALUES
+(1, 'john@example.com'),
+(2, 'bob@example.com'),
+(3, 'john@example.com');
+
+-- query from the person table
+select * from PSN;
+
+-- solution using delete
+delete p.*
+from PSN as p, (
+select Email, min(Id) as minId
+from PSN
+group by Email
+having count(*) > 1
+) as q
+where p.Email = q.Email and Id > q.minId;
+
+
+select * from psn;
+
+
+
+
+
